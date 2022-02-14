@@ -1,4 +1,5 @@
 {
+  "project": "dama/tsconfig.json",
   "root": true,
   "ignorePatterns": ["projects/**/*"],
   "overrides": [

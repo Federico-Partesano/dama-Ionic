@@ -1,0 +1,108 @@
+.match {
+    display: flex;
+    flex-direction: row;
+}
+
+.square {
+    width: calc(90vw / 8);
+    height: calc(90vw/ 8);
+
+}
+
+.color-1{
+    background-color: #dcb76a;
+}
+
+.color-0{
+    background-color: black;
+}
+
+.container__match {
+    position: relative;
+}
+
+.player__1 {
+    transform:  scaleX(-1) 
+}
+
+.player__2 {
+    transform:  scaleX(-1)
+}
+
+.your__turn{
+    color: green;
+}
+
+.opponent__turn {
+    color: red;
+}
+
+.chat {
+    margin-top: 10px;
+    background-color: black;
+    width: 100%;
+    min-height: 30vh;
+    overflow-y: scroll;
+    display: flow-root;
+}
+
+.container__input__text{
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 88%;
+}
+
+.message {
+    padding: 10px;
+    width: 100%;
+    font-size: 9px;
+}
+
+.left {
+    text-align: start;
+}
+
+.right {
+    text-align: right;
+}
+
+.input__send {
+    width: 10%;
+    font-size: 12px;
+    width: 30px;
+    cursor: pointer;
+}
+
+
+.field__circle{
+    width: calc(90vw / 8);
+    height: calc(90vw/ 8);
+    position: absolute;
+    z-index: 20;
+    transition: all 1s linear;
+      
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+$sizes: 0,1,2,3,4,5,6,7;
+
+
+@each $column in $sizes {
+  @each $row in $sizes {
+  .lady-#{$column}-#{$row} {
+    top: calc((90vw / 8) * $column );
+    left: calc((90vw / 8) * $row)
+    }
+  }
+}
+

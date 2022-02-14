@@ -1,0 +1,62 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>match</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  
+<div *ngIf="match" class="container">
+  <p *ngIf="nickname === match.currentPlayer" class="your__turn">Is your turn!!</p>
+<p *ngIf="nickname !== match.currentPlayer" class="opponent__turn">È il turno dell avversario</p>
+  <div [class]="'container__match ' + rotationField ">
+<ng-container *ngFor="let column of match.field; let i = index" >
+  <div class="match">
+  <ng-container *ngFor="let row of column; let i2 = index" >
+    <div *ngIf="i % 2 !== 0">
+    <div *ngIf="i2 % 2 !== 0" class="square color-1" (click)="handleClick(i,i2)">
+      <img *ngIf="row !== 0" [src]="+ row === 1 || row === 2 ? '../../assets/lady-white.png' : '../../assets/lady-red.png' " class="field__circle"/>
+
+    </div>
+    <div *ngIf="i2 % 2 === 0" class="square color-0" (click)="handleClick(i,i2)">
+      <img *ngIf="row !== 0" [src]="+ row === 1 || row === 2 ? '../../assets/lady-white.png' : '../../assets/lady-red.png' " class="field__circle"/>
+
+    </div>
+  </div>
+  <div *ngIf="i % 2 === 0">
+    <div *ngIf="i2 % 2 === 0" class="square color-1" (click)="handleClick(i,i2)">
+      <img *ngIf="row !== 0" [src]="+ row === 1 || row === 2 ? '../../assets/lady-white.png' : '../../assets/lady-red.png' " class="field__circle"/>
+
+    </div>
+    <div *ngIf="i2 % 2 !== 0" class="square color-0" (click)="handleClick(i,i2)">
+      <img *ngIf="row !== 0" [src]="+ row === 1 || row === 2 ? '../../assets/lady-white.png' : '../../assets/lady-red.png' " class="field__circle"/>
+
+    </div>
+  </div>
+
+
+
+  </ng-container>
+</div>
+</ng-container>
+
+</div>
+
+<div #target class="chat" *ngIf="match && nickname">
+  <ng-container *ngFor="let item of match.messages" >
+  <div [ngClass]="{'message': true, 'left':nickname === item.nickname, 'right': nickname !== item.nickname }">
+    <span>{{ item.nickname + ': ' + item.content }}</span>
+  </div>
+  </ng-container>
+</div>
+<div class="container__input__text">
+<ion-input [formControl]="inputChat" placeholder="Enter Input"></ion-input>
+<div class="input__send">
+  <p (click)="addMessage()">send</p>
+</div>
+</div>
+
+</div>
+
+  
+</ion-content>

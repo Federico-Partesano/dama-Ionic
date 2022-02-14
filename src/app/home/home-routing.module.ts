@@ -6,7 +6,12 @@ const routes: Routes = [
   {
     path: '',
     component: HomePage,
+  },
+  {
+    path: ':id/match',
+    loadChildren: () => import('./match/match.module').then( m => m.MatchPageModule)
   }
+
 ];
 
 @NgModule({

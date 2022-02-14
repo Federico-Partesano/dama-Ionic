@@ -1,0 +1,23 @@
+<ion-modal [isOpen]="isModalOpen">
+  <ng-template>
+    <ion-content>
+      <div class="container">
+      <form [formGroup]="signUpForm" (ngSubmit)="logIn()">
+        <ion-item  class="b">
+          <ion-label position="floating">nickname</ion-label>
+          <ion-input class="input" formControlName="nickname"  ></ion-input>
+        </ion-item>
+        <ion-item class="b">
+          <ion-label position="floating" type="password">password</ion-label>
+          <ion-input formControlName="password" class="input"  ></ion-input>
+        </ion-item>
+        <p class="sigin__text">You don't you have an account? <a [routerLink]="['/signup']" class="signin__signin__text">sign in!</a></p>
+        <div class="container_button">
+        <ion-button type="submit">Login</ion-button>
+      </div>
+        </form>
+      </div>
+    </ion-content>
+
+  </ng-template>
+</ion-modal>

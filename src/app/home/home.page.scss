@@ -22,6 +22,95 @@
   margin: 0;
 }
 
+.link__title {
+  color: rgb(149, 16, 16);
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: 400;
+}
+
 #container a {
   text-decoration: none;
 }
+
+.subtitle {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+$size__circle: 20px;
+.subtitle__circle {
+  width: $size__circle;
+  height: $size__circle;
+  border-radius: $size__circle;
+}
+
+.in_progress {
+  background-color: yellow;
+}
+
+.pre_start {
+  background-color: green;
+}
+
+.closed {
+  background-color: red;
+}
+
+$match__size: 150px;
+.field__image {
+  width: 100%;
+  background-color: brown;
+}
+
+.container__field {
+  position: relative;
+  transform: rotate(-90deg);
+}
+
+.container__card__body {
+  display: flex;
+  flex-direction: column;
+}
+
+.field__circle {
+  width: calc(100% / 8);
+  height: calc(100% / 8);
+  position: absolute;
+}
+
+img {
+  z-index: 20;
+
+}
+
+.container__button {
+  width: 100%;
+  margin-top: 20px;
+
+  margin-bottom: 20px;
+}
+
+.button {
+  width: 100%;
+}
+
+
+
+$sizes: 0,1,2,3,4,5,6,7;
+
+
+@each $column in $sizes {
+  @each $row in $sizes {
+  .lady-#{$column}-#{$row} {
+    top: calc((100% / 8) * $column - 2px);
+    left: calc((100% / 8) * $row + 1px)
+    }
+  }
+}
+
+
+
+

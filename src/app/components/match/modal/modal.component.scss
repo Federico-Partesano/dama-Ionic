@@ -1,0 +1,52 @@
+.container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+  
+  .img {
+    height: 30%;
+    padding-bottom: 20px;
+  }
+  
+  .input {
+    background-color: transparent;
+  }
+  
+  .b {
+    border-radius: 5px;
+    margin-bottom: 5px;
+  }
+  
+  .sigin__text{
+      font-size: 12px;
+      text-align: center;
+      color: grey;
+  }
+  
+  .signin__signin__text{
+      color: rgb(1, 82, 1);
+      text-decoration: underline;
+      cursor: pointer;
+  }
+  
+  .button {
+    background-color: #0b1633;
+  }
+  
+  .container_button {
+      display: flex;
+      justify-content: center;
+  }
+  
