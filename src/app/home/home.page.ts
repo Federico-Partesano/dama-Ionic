@@ -30,9 +30,26 @@ export class HomePage implements OnInit {
 
   async ngOnInit() {
 
+    this.auth.socket.on('match-join', (match: Match) => {
+      const item = this.matches.find(element => element.id === match.id);
+     item.field = match.field;
+     item.player2 = match.player2;
+     item.status = match.status;
+     item.currentPlayer = match.currentPlayer;
+      console.log('ciao', match);
+ 
+
+  this.auth.socket.on('match-setmove', (match: Match) => {
+    const item = this.matches.find(element => element.id === match.id);
+    item.field = match.field;
+    item.player2 = match.player2;
+    item.status = match.status;
+    item.currentPlayer = match.currentPlayer;
+   })
+})
 
 
-    
+  
   this.auth.socket.on('add-new-match', (match: Match) => {
       console.log('refresh', match)
     this.matches.unshift(match)
@@ -41,19 +58,7 @@ export class HomePage implements OnInit {
   this.auth.socket.on('matches', (matches: Match[]) => {
     console.log('refresh2222', matches)
   this.matches = matches;
-})
-
-//   this.socket.emit('event1', {
-//     msg: 'Client to server, can you hear me server?'
-// });
-//   this.socket.on('event2', (data: any) => {
-//   console.log(data.msg);
-//   this.socket.emit('event3', {
-//       msg: 'Yes, its working for me!!'
-//   });
-// });
-   
-    
+})    
     this.matches = await this.matchService.getMatches();
     this.nickname = await (await this.auth.getItemStorage<Credentials>('credentials')).nickname;
     console.log(this.matches);

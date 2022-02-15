@@ -77,7 +77,8 @@ export class MatchPage implements OnInit {
       if(!this.currentPlayer.includes(this.match.field[x][y])) return
       this.click1 = {startX: x,startY: y}
       this.classClick1 = `${x}-${y}`;
-      this.tt(x,y);
+      this.checkDiagonal(x,y);
+       !this.choics.length && this.tt(x,y);
       return;
     }
     if (!this.click2) {
@@ -152,9 +153,36 @@ export class MatchPage implements OnInit {
   tt4 = (x: number, y: number): boolean =>  this.choics.some((element) => element == `${x}-${y}`);
 
   checkDiagonal = (y: number, x: number) => {
-    if(this.match.field[y][x]) {
+    if(this.rotated){
+      console.log('ciaohhhjhjhjhj:',this.match.field[y-1][x-1]);
+     if(this.match.field[y-1][x-1] === 1 || this.match.field[y-1][x-1] === 2){
+       console.log('ciao22');
+        if(this.match.field[y-2][x-2] === 0){
+          this.choics.push(`${y - 2}-${x - 2}`);
+        }
+      }
+      if(this.match.field[y-1][x+1] === 1 || this.match.field[y-1][x+1] === 2){
+        if(this.match.field[y-2][x + 2] === 0) {
+          this.choics.push(`${y - 2}-${x + 2}`);
+        }
+      }
+  
+      // this.match.field[y-1][x+1] === 0 &&  this.choics.push(`${y - 1}-${x + 1}`);
+    } else {
 
-    }
+      if(this.match.field[y+1][x-1] === 3 || this.match.field[y+1][x-1] === 4){
+        if(this.match.field[y+2][x-2] === 0){
+          this.choics.push(`${y + 2}-${x - 2}`);
+        }
+      }
+      if(this.match.field[y+1][x+1] === 3 || this.match.field[y+1][x+1] === 4){
+
+        if(this.match.field[y+2][x + 2] === 0) {
+          this.choics.push(`${y + 2}-${x + 2}`);
+
+        }
+     } 
   }
   
+}
 }
