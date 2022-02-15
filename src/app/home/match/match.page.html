@@ -1,7 +1,11 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
     <ion-title>match</ion-title>
   </ion-toolbar>
+  
 </ion-header>
 
 <ion-content>
@@ -14,21 +18,21 @@
   <div class="match">
   <ng-container *ngFor="let row of column; let i2 = index" >
     <div *ngIf="i % 2 !== 0">
-    <div *ngIf="i2 % 2 !== 0" class="square color-1" (click)="handleClick(i,i2)">
+    <div *ngIf="i2 % 2 !== 0" [ngClass]="{'square color-1': true, 'active': classClick1 === convertToString(i,i2), 'green': tt4(i,i2)} " (click)="handleClick(i,i2)">
       <img *ngIf="row !== 0" [src]="+ row === 1 || row === 2 ? '../../assets/lady-white.png' : '../../assets/lady-red.png' " class="field__circle"/>
 
     </div>
-    <div *ngIf="i2 % 2 === 0" class="square color-0" (click)="handleClick(i,i2)">
+    <div *ngIf="i2 % 2 === 0" class="" [ngClass]="{'square color-0': true, 'active': classClick1 === convertToString(i,i2), 'green': tt4(i,i2)} " (click)="handleClick(i,i2)">
       <img *ngIf="row !== 0" [src]="+ row === 1 || row === 2 ? '../../assets/lady-white.png' : '../../assets/lady-red.png' " class="field__circle"/>
 
     </div>
   </div>
   <div *ngIf="i % 2 === 0">
-    <div *ngIf="i2 % 2 === 0" class="square color-1" (click)="handleClick(i,i2)">
+    <div *ngIf="i2 % 2 === 0" [ngClass]="{'square color-1': true, 'active': classClick1 === convertToString(i,i2), 'green': tt4(i,i2)} " (click)="handleClick(i,i2)">
       <img *ngIf="row !== 0" [src]="+ row === 1 || row === 2 ? '../../assets/lady-white.png' : '../../assets/lady-red.png' " class="field__circle"/>
 
     </div>
-    <div *ngIf="i2 % 2 !== 0" class="square color-0" (click)="handleClick(i,i2)">
+    <div *ngIf="i2 % 2 !== 0" [ngClass]="{'square color-0': true, 'active': classClick1 === convertToString(i,i2), 'green': tt4(i,i2)} " (click)="handleClick(i,i2)">
       <img *ngIf="row !== 0" [src]="+ row === 1 || row === 2 ? '../../assets/lady-white.png' : '../../assets/lady-red.png' " class="field__circle"/>
 
     </div>
@@ -41,7 +45,6 @@
 </ng-container>
 
 </div>
-
 <div #target class="chat" *ngIf="match && nickname">
   <ng-container *ngFor="let item of match.messages" >
   <div [ngClass]="{'message': true, 'left':nickname === item.nickname, 'right': nickname !== item.nickname }">

@@ -76,10 +76,11 @@ export class HomePage implements OnInit {
 
   addNewMatch = async () => {
     try{  
-     const newMatch = await this.matchService.addMatch(this.nickname);
-     this.matches.unshift(newMatch);
-    }catch({error:{error}}) {
-      this.toastService.presentToast(error);
+     await this.matchService.addMatch(this.nickname);
+    //  this.matches.unshift(newMatch);
+    }catch(e) {
+      console.log(e);
+      // this.toastService.presentToast(error);
     }
 }
 

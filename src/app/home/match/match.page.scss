@@ -21,12 +21,18 @@
     position: relative;
 }
 
+.active {
+    background-color: red;
+}
+.green {
+    background-color: green;
+}
 .player__1 {
     transform:  scaleX(-1) 
 }
 
 .player__2 {
-    transform:  scaleX(-1)
+    transform:  scaleX(-1) rotate(180deg)  
 }
 
 .your__turn{
