@@ -11,29 +11,29 @@
 <ion-content>
   
 <div *ngIf="match" class="container">
-  <p *ngIf="nickname === match.currentPlayer" class="your__turn">Is your turn!!</p>
-<p *ngIf="nickname !== match.currentPlayer" class="opponent__turn">È il turno dell avversario</p>
+
   <div [class]="'container__match ' + rotationField ">
 <ng-container *ngFor="let column of match.field; let i = index" >
   <div class="match">
   <ng-container *ngFor="let row of column; let i2 = index" >
     <div *ngIf="i % 2 !== 0">
     <div *ngIf="i2 % 2 !== 0" [ngClass]="{'square color-1': true, 'active': classClick1 === convertToString(i,i2), 'green': tt4(i,i2)} " (click)="handleClick(i,i2)">
-      <img *ngIf="row !== 0" [src]="+ row === 1 || row === 2 ? '../../assets/lady-white.png' : '../../assets/lady-red.png' " class="field__circle"/>
+      <img [id]="i + '-' + i2" *ngIf="row !== 0" [src]="+ row === 1 || row === 2 ? '../../assets/lady-white.png' : '../../assets/lady-red.png' " class="field__circle"/>
 
     </div>
     <div *ngIf="i2 % 2 === 0" class="" [ngClass]="{'square color-0': true, 'active': classClick1 === convertToString(i,i2), 'green': tt4(i,i2)} " (click)="handleClick(i,i2)">
-      <img *ngIf="row !== 0" [src]="+ row === 1 || row === 2 ? '../../assets/lady-white.png' : '../../assets/lady-red.png' " class="field__circle"/>
+      <img [id]="i + '-' + i2" *ngIf="row !== 0" [src]="+ row === 1 || row === 2 ? '../../assets/lady-white.png' : '../../assets/lady-red.png' " class="field__circle"/>
 
     </div>
   </div>
   <div *ngIf="i % 2 === 0">
     <div *ngIf="i2 % 2 === 0" [ngClass]="{'square color-1': true, 'active': classClick1 === convertToString(i,i2), 'green': tt4(i,i2)} " (click)="handleClick(i,i2)">
-      <img *ngIf="row !== 0" [src]="+ row === 1 || row === 2 ? '../../assets/lady-white.png' : '../../assets/lady-red.png' " class="field__circle"/>
+      <img [id]="i + '-' + i2" *ngIf="row !== 0" [src]="+ row === 1 || row === 2 ? '../../assets/lady-white.png' : '../../assets/lady-red.png' " class="field__circle"/>
 
     </div>
+    
     <div *ngIf="i2 % 2 !== 0" [ngClass]="{'square color-0': true, 'active': classClick1 === convertToString(i,i2), 'green': tt4(i,i2)} " (click)="handleClick(i,i2)">
-      <img *ngIf="row !== 0" [src]="+ row === 1 || row === 2 ? '../../assets/lady-white.png' : '../../assets/lady-red.png' " class="field__circle"/>
+      <img [id]="i + '-' + i2" *ngIf="row !== 0" [src]="+ row === 1 || row === 2 ? '../../assets/lady-white.png' : '../../assets/lady-red.png' " class="field__circle"/>
 
     </div>
   </div>
@@ -45,6 +45,8 @@
 </ng-container>
 
 </div>
+<p *ngIf="nickname === match.currentPlayer" class="your__turn">Is your turn!!</p>
+<p *ngIf="nickname !== match.currentPlayer" class="opponent__turn">È il turno dell avversario</p>
 <div #target class="chat" *ngIf="match && nickname">
   <ng-container *ngFor="let item of match.messages" >
   <div [ngClass]="{'message': true, 'left':nickname === item.nickname, 'right': nickname !== item.nickname }">
