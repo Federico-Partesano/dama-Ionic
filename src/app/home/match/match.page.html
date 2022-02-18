@@ -11,7 +11,8 @@
 <ion-content>
   
 <div *ngIf="match" class="container">
-
+  <p *ngIf="nickname === match.currentPlayer" class="your__turn">Is your turn!!</p>
+  <p *ngIf="nickname !== match.currentPlayer" class="opponent__turn">È il turno dell avversario</p>
   <div [class]="'container__match ' + rotationField ">
 <ng-container *ngFor="let column of match.field; let i = index" >
   <div class="match">
@@ -19,16 +20,18 @@
     <div *ngIf="i % 2 !== 0">
     <div *ngIf="i2 % 2 !== 0" [ngClass]="{'square color-1': true, 'active': classClick1 === convertToString(i,i2), 'green': tt4(i,i2)} " (click)="handleClick(i,i2)">
       <img [id]="i + '-' + i2" *ngIf="row !== 0" [src]="+ row === 1 || row === 2 ? '../../assets/lady-white.png' : '../../assets/lady-red.png' " class="field__circle"/>
-
+      <p style="position: absolute;font-size: 10px;">{{ i + '-'+ i2}}</p>
     </div>
     <div *ngIf="i2 % 2 === 0" class="" [ngClass]="{'square color-0': true, 'active': classClick1 === convertToString(i,i2), 'green': tt4(i,i2)} " (click)="handleClick(i,i2)">
       <img [id]="i + '-' + i2" *ngIf="row !== 0" [src]="+ row === 1 || row === 2 ? '../../assets/lady-white.png' : '../../assets/lady-red.png' " class="field__circle"/>
+      <p style="position: absolute;font-size: 10px;">{{ i + '-'+ i2}}</p>
 
     </div>
   </div>
   <div *ngIf="i % 2 === 0">
     <div *ngIf="i2 % 2 === 0" [ngClass]="{'square color-1': true, 'active': classClick1 === convertToString(i,i2), 'green': tt4(i,i2)} " (click)="handleClick(i,i2)">
       <img [id]="i + '-' + i2" *ngIf="row !== 0" [src]="+ row === 1 || row === 2 ? '../../assets/lady-white.png' : '../../assets/lady-red.png' " class="field__circle"/>
+      <p style="position: absolute;font-size: 10px;">{{ i + '-'+ i2}}</p>
 
     </div>
     
@@ -45,21 +48,20 @@
 </ng-container>
 
 </div>
-<p *ngIf="nickname === match.currentPlayer" class="your__turn">Is your turn!!</p>
-<p *ngIf="nickname !== match.currentPlayer" class="opponent__turn">È il turno dell avversario</p>
 <div #target class="chat" *ngIf="match && nickname">
   <ng-container *ngFor="let item of match.messages" >
-  <div [ngClass]="{'message': true, 'left':nickname === item.nickname, 'right': nickname !== item.nickname }">
-    <span>{{ item.nickname + ': ' + item.content }}</span>
+  <div [ngClass]="{'container__message': true, 'right':nickname === item.nickname, 'left': nickname !== item.nickname }">
+    <span [ngClass]="{'message': true, 'right__message':nickname === item.nickname, 'left__message': nickname !== item.nickname }">{{ item.nickname + ': ' + item.content }}</span>
   </div>
   </ng-container>
 </div>
 <div class="container__input__text">
-<ion-input [formControl]="inputChat" placeholder="Enter Input"></ion-input>
-<div class="input__send">
-  <p (click)="addMessage()">send</p>
-</div>
-</div>
+  <input class="input" [formControl]="inputChat" placeholder="Enter Input"/>
+  <div class="input__send">
+  <img class="send__img" (click)="addMessage()" src="../../../assets/send.svg">
+  </div>
+  </div>
+
 
 </div>
 

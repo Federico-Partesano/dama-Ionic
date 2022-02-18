@@ -24,7 +24,7 @@ export class MatchPage implements OnInit {
   nickname: string = '';
   interval: any;
   inputChat = new FormControl('');
-  classClick1 = '';
+  classClick1:`${number}-${number}` | '' = '';
   classClick2 = '';
   currentPlayer: number[];
   choics: `${string}-${string}`[] = [];
@@ -70,9 +70,10 @@ export class MatchPage implements OnInit {
     })
 
     this.auth.socket.on(`match-refresh-${this.path}`,async ({match, moves: {startX,startY, finalX, finalY}}: {match: Match, moves: SetMove}) => {
+      console.log('match', match)
       const animation = this.animationCtrl.create()
       .addElement(document.getElementById(startX + '-' + startY))
-      .duration(800)
+      .duration(500)
       .iterations(1)
       .easing('ease-out')
       .fromTo('left', `calc((90vw / 8) * ${this.rotationField === "player__1" ?  startY : startY} )`, `calc((90vw / 8) * ${this.rotationField === "player__1" ?  finalY : finalY} )`)
@@ -80,28 +81,23 @@ export class MatchPage implements OnInit {
         await animation.play();
       console.log('refresh', match);
       this.match = match;
-      this.mustEat = false;
-      // this.match.field.forEach((row, index) => {
-      //   row.forEach((col, index2) => {
-      //     // if(!this.currentPlayer.includes(this.match.field[index][index2])) return
-      //    if(this.mustEat) return
-      //    const {x,y} = this.checkDiagonal(index,index2);
-      //     if(this.choics.length > 0){
-      //       this.mustEat = true;
-      //       this.click1 = {startX: x, startY: y};
-      //       this.classClick1 = `${x}-${y}`;
-      //       console.log('ffff:', x,"-",y);
-      //     }
-      //   })
-      // })
+      this.checkDiagonal2();
+      console.log('choice', this.choics);
+      // this.checkDiagonal2(this.match);
     })
 
 
   console.log()
+    setTimeout(() => {
+      this.scrollToElement();
+    }, 1000)
 }
 
+
    handleClick = async(x: number, y: number) => {
-    //  if(this.match.currentPlayer !== this.nickname) return this.toastService.presentToast('Await your turn!!');
+     console.log('andleClick');
+    if(this.nickname !== this.match.player1 && this.nickname !== this.match.player2) return
+     if(this.match.currentPlayer !== this.nickname) return this.toastService.presentToast('Await your turn!!');
     console.log(`${x}-${y}`);
 
     if (!this.click1){  
@@ -140,7 +136,7 @@ export class MatchPage implements OnInit {
       this.rotationField === "player__1" && console.log('sdasdasdasda');
       const animation = this.animationCtrl.create()
       .addElement(document.getElementById(startX + '-' + startY))
-      .duration(800)
+      .duration(500)
       .iterations(1)  
       .easing('ease-out')      
       .fromTo('left', `calc((90vw / 8) * ${this.rotationField === "player__1" ?  startY : startY} )`, `calc((90vw / 8) * ${this.rotationField === "player__1" ?  finalY : finalY} )`)
@@ -152,6 +148,9 @@ export class MatchPage implements OnInit {
       this.click2 = null;
       this.classClick1 = ``;
       this.choics = [];
+        this.mustEat = false;
+
+
 
       
 
@@ -195,6 +194,7 @@ export class MatchPage implements OnInit {
     if(this.rotated){
       this.match.field[y-1][x-1] === 0 &&  this.choics.push(`${y - 1}-${x - 1}`);
       this.match.field[y-1][x+1] === 0 &&  this.choics.push(`${y - 1}-${x + 1}`);
+      
     } else {
       
       this.match.field[y+1][x-1] === 0 &&  this.choics.push(`${y + 1}-${x - 1}`);
@@ -203,18 +203,44 @@ export class MatchPage implements OnInit {
   }
 
 
+  checkDiagonal2 = () => {
+    console.log('maust', this.mustEat)
+    let coords:{x: number, y: number} | null= null;
+    this.match.field.forEach((element, index) => {
+        element.forEach((row, index2) => {
+          if(this.mustEat) return
+          if(this.currentPlayer.includes(row)) {
+            console.log('row',row, "-");
+            const coordsDiagonal = this.checkDiagonalRefresh(index, index2);
+            coords = coordsDiagonal;
+          if(this.choics.length > 0 && coords)
+          { 
+            const {x,y} = coords;
+            this.classClick1 = `${y}-${x}`;
+            this.click1 = {startX: y, startY: x}; 
+            console.log('click1', coords);
+            this.mustEat = true;
+            return
+          }
+        }
+
+        })
+    });
+  }
+
+
   tt4 = (x: number, y: number): boolean =>  this.choics.some((element) => element == `${x}-${y}`);
 
   checkDiagonal = (y: number, x: number):{y,x} => {
+    console.log('t',x,y);
     if(this.rotated ){
-     if(this.match.field[y-1][x-1] === 1 || this.match.field[y-1][x-1] === 2){
-       console.log('ciao22');
-        if( y >= 2 && this.match.field[y-2][x-2] === 0){
+     if((y > 0 && x > 0) && (this.match.field[y-1][x-1] === 1 || this.match.field[y-1][x-1] === 2)){
+        if(( y >= 2 && x > 1) && this.match.field[y-2][x-2] === 0){
           this.choics.push(`${y - 2}-${x - 2}`);
         }
       }
-      if(this.match.field[y-1][x+1] === 1 || this.match.field[y-1][x+1] === 2){
-        if(y >= 2 && this.match.field[y-2][x + 2] === 0) {
+      if( (y > 0 && x < 7) && (this.match.field[y-1][x+1] === 1 || this.match.field[y-1][x+1] === 2)){
+        if((y > 1 && x < 6) && this.match.field[y-2][x + 2] === 0) {
           this.choics.push(`${y - 2}-${x + 2}`);
         }
       }
@@ -222,14 +248,14 @@ export class MatchPage implements OnInit {
       // this.match.field[y-1][x+1] === 0 &&  this.choics.push(`${y - 1}-${x + 1}`);
     } else {
 
-      if(this.match.field[y+1][x-1] === 3 || this.match.field[y+1][x-1] === 4){
-        if(x >= 2 &&this.match.field[y+2][x-2] === 0){
+      if( (y < 7 && x > 0 )  && (this.match.field[y+1][x-1] === 3 || this.match.field[y+1][x-1] === 4)){
+        if((x > 1 && y < 6) &&this.match.field[y+2][x-2] === 0){
           this.choics.push(`${y + 2}-${x - 2}`);
         }
       }
-      if(this.match.field[y+1][x+1] === 3 || this.match.field[y+1][x+1] === 4){
+      if( (y < 7 && x < 7 ) && (this.match.field[y+1][x+1] === 3 || this.match.field[y+1][x+1] === 4)){
 
-        if(this.match.field[y+2][x + 2] === 0) {
+        if(( y < 6 && x < 6  ) &&this.match.field[y+2][x + 2] === 0) {
           this.choics.push(`${y + 2}-${x + 2}`);
 
         }
@@ -237,4 +263,39 @@ export class MatchPage implements OnInit {
   }
   return {y,x};
 }
+
+checkDiagonalRefresh = (y: number, x: number):{y,x} => {
+  console.log('t',x,y);
+  if(this.rotated ){
+   if((y > 0 && x > 0) && (this.match.field[y-1][x-1] === 1 || this.match.field[y-1][x-1] === 2)){
+      if(( y >= 2 && x > 1) && this.match.field[y-2][x-2] === 0){
+        this.choics.push(`${y - 2}-${x - 2}`);
+      }
+    }
+    if( (y > 0 && x < 7) && (this.match.field[y-1][x+1] === 1 || this.match.field[y-1][x+1] === 2)){
+      if((y > 1 && x < 6) && this.match.field[y-2][x + 2] === 0) {
+        this.choics.push(`${y - 2}-${x + 2}`);
+      }
+    }
+
+    // this.match.field[y-1][x+1] === 0 &&  this.choics.push(`${y - 1}-${x + 1}`);
+  } else {
+
+    if( (y < 7 && x > 0 )  && (this.match.field[y+1][x-1] === 3 || this.match.field[y+1][x-1] === 4)){
+      if((x > 1 && y < 6) &&this.match.field[y+2][x-2] === 0){
+        this.choics.push(`${y + 2}-${x - 2}`);
+      }
+    }
+    if( (y < 7 && x < 7 ) && (this.match.field[y+1][x+1] === 3 || this.match.field[y+1][x+1] === 4)){
+
+      if(( y < 6 && x < 6  ) &&this.match.field[y+2][x + 2] === 0) {
+        this.choics.push(`${y + 2}-${x + 2}`);
+
+      }
+   } 
+}
+return {y,x};
+}
+
+
 }

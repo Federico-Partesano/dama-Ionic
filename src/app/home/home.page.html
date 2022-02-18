@@ -47,7 +47,9 @@
         <div class="container__card__body">
           <p>Created at: <span> {{ item.date | date: 'dd-MM-yyyy hh:mm'}}</span></p>
         <p>Turn off: <span> {{ item.currentPlayer }}</span></p>
-        <ion-button *ngIf="item.status !== 'closed' " (click)="redirectToMatch(item.id)">Join</ion-button>
+        <ion-button *ngIf="item.status !== 'closed' && !item.player2 " (click)="redirectToMatch(item.id, item.player2)">Join</ion-button>
+        <ion-button *ngIf="item.status !== 'closed' && item.player2 " (click)="redirectToMatch(item.id, item.player2)">watch</ion-button>
+
         </div>
       </ion-card-content>
     </ion-card>

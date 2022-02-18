@@ -45,12 +45,44 @@
 
 .chat {
     margin-top: 10px;
-    background-color: black;
+    background-color: #0c141a;
     width: 100%;
-    min-height: 25vh;
-    overflow-y: scroll;
+    min-height: 18vh;
+    overflow-y: auto;
     display: flow-root;
 }
+
+.message {
+    border-radius: 5px;
+    margin-top: 5px;
+    padding: 10px
+}
+
+.input {
+    width: 100%;
+    background-color: #2a3942;
+    border-radius: 5px;
+    border: 0;
+    padding: 10px;
+    margin: 5px;
+}
+
+.send__img {
+    width: 24px;
+    height: 24px;
+}
+
+.left__message {
+    background-color: #1f2c33;
+    
+}
+
+.right__message {
+    background-color: #015c4b;
+
+}
+
+
 
 .container__input__text{
     margin-bottom: 10px;
@@ -60,10 +92,13 @@
     width: 88%;
 }
 
-.message {
+.container__message {
     padding: 10px;
     width: 100%;
     font-size: 9px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    border-radius: 5px;
 }
 
 .left {
@@ -79,6 +114,10 @@
     font-size: 12px;
     width: 30px;
     cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
 }
 
 
@@ -98,6 +137,7 @@
     height: 100%;
     justify-content: center;
     align-items: center;
+    background-color: #1f2c33;
 }
 
 $sizes: 0,1,2,3,4,5,6,7;

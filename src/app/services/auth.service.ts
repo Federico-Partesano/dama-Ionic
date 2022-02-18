@@ -3,18 +3,18 @@ import { HttpClient } from '@angular/common/http';
 import { pathApi, pathSocket } from 'src/config';
 import { Storage } from '@ionic/storage-angular';
 import { queryFilters } from 'src/utils/functions';
-import * as io from 'socket.io-client';
+import  {connect, Socket} from 'socket.io-client';
 import { WebSocketServer } from '@awesome-cordova-plugins/web-socket-server';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private storage: Storage = null;
-  socket: any;
+  socket: Socket;
 
   constructor(private http: HttpClient, private storageService: Storage) { }
 
-  connectSocket = () =>     !this.socket && (this.socket = io.connect(pathSocket));
+  connectSocket = () =>     !this.socket && (this.socket = connect(pathSocket));
 
   getSocket = () => this.socket;
 

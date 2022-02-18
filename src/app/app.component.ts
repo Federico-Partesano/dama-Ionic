@@ -17,7 +17,7 @@ export class AppComponent {
   await  this.auth.createStorage();
     await this.auth.connectSocket();
 
-    this.auth.socket.on('connect',(socket) =>{
+    this.auth.socket.on('connect',() =>{
       console.log('connection');
     })
   

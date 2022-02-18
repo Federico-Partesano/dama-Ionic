@@ -69,7 +69,9 @@ export class HomePage implements OnInit {
     this.router.navigate(['/login']);
   }
 
-   redirectToMatch = async(id: string) => {
+   redirectToMatch = async(id: string, player2: string) => {
+     if(player2) return this.router.navigate([`${id}`,'match'], {relativeTo: this.routerActive});
+
     try {
       await this.matchService.joinMatch(id)
      this.router.navigate([`${id}`,'match'], {relativeTo: this.routerActive});
