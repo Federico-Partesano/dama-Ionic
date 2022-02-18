@@ -9,10 +9,12 @@ import { Credentials } from "src/models/credentials";
 @Injectable()
 export class Interceptor implements HttpInterceptor {
 
-    basicRoutes = ['/matches'];
+    basicRoutes = ['/matches', '/users','/chats'];
+    basicRoutes2 = ['/users/login', '/users/signup'];
+
     constructor(private http: HttpClient, private auth: AuthService) { }
     
-    
+
     baseHeader: ({accessToken, nickname}:{accessToken: string, nickname: string}) => HttpHeaders=({accessToken, nickname}:{accessToken: string, nickname: string}) => {
         return new HttpHeaders({
         Authorization: `Bearer ${accessToken}`,
@@ -22,12 +24,15 @@ export class Interceptor implements HttpInterceptor {
 
     intercept(req: HttpRequest<any>, next: HttpHandler):Observable<HttpEvent<any>> {  
         const { url, method } = req;
-     
+
 
         return from(this.auth.getItemStorage<Credentials>('credentials')).pipe( switchMap (credentials =>{
-            if(this.basicRoutes.some(endpoint => url.includes(endpoint)) && method !== "GET"){
+            if(this.basicRoutes2.some(endpoint => url.includes(endpoint))) {
+                return next.handle(req);
+            }
+            if(this.basicRoutes.some(endpoint => url.includes(endpoint))){
+                console.log('interceptor')
                 req = req.clone({ headers: this.baseHeader(credentials)});
-
             } 
             return next.handle(req);
         }))

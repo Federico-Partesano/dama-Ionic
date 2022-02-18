@@ -19,7 +19,7 @@ export class AuthService {
   getSocket = () => this.socket;
 
   login = (body: Record<'nickname' | 'password', string>) =>  this.http.post<{accessToken: string}>(`${pathApi}/users/login`, body).toPromise();
-  signup = (body: Record<'nickname' | 'password', string>) =>  this.http.post<{accessToken: string}>(`${pathApi}/users/signup`, body).toPromise();
+  signup = (body: Record<'nickname' | 'password' | 'cover', string>) =>  this.http.post<{accessToken: string}>(`${pathApi}/users/signup`, body).toPromise();
 
 
   createStorage = async() => this.storage = await this.storageService.create();

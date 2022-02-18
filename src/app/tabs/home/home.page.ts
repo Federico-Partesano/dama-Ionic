@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Credentials } from 'src/models/credentials';
 import { Match } from 'src/models/match';
-import { AuthService } from '../services/auth.service';
-import { MatchesService } from '../services/matches.service';
-import { ToastService } from '../services/toast.service';
+import { AuthService } from '../../services/auth.service';
+import { MatchesService } from '../../services/matches.service';
+import { ToastService } from '../../services/toast.service';
 import { Animation, AnimationController, createAnimation } from '@ionic/angular';
 import * as io from 'socket.io-client';
 import { pathSocket } from 'src/config';
+import { LoadingService } from '../../services/loading.service';
 
 @Component({
   selector: 'app-home',
@@ -18,17 +19,22 @@ export class HomePage implements OnInit {
   nickname: string = '';
   matches: Match[] = [];
   isModalOpen: boolean = true;
+  loading: boolean = false;
 
   constructor(private auth: AuthService,
     private router: Router,
     private matchService: MatchesService,
     private routerActive:ActivatedRoute,
     private toastService: ToastService,
-    private animationCtrl: AnimationController
+    private animationCtrl: AnimationController,
+    private loadingService: LoadingService
   ) {
   }
 
+ 
+
   async ngOnInit() {
+
 
     this.auth.socket.on('match-join', (match: Match) => {
       const item = this.matches.find(element => element.id === match.id);
@@ -49,6 +55,7 @@ export class HomePage implements OnInit {
 })
 
 
+
   
   this.auth.socket.on('add-new-match', (match: Match) => {
       console.log('refresh', match)
@@ -59,10 +66,19 @@ export class HomePage implements OnInit {
     console.log('refresh2222', matches)
   this.matches = matches;
 })    
+const loading = await  this.loadingService.createAnimation();
+    loading.present();
     this.matches = await this.matchService.getMatches();
     this.nickname = await (await this.auth.getItemStorage<Credentials>('credentials')).nickname;
+    loading.dismiss();
     console.log(this.matches);
   }
+
+  socketEvent = async () => {
+    this.router.navigate(['/tabs']);
+  
+  }
+
 
   logout = async() => {
     await this.auth.setItemStorage('credentials', undefined);
@@ -70,11 +86,11 @@ export class HomePage implements OnInit {
   }
 
    redirectToMatch = async(id: string, player2: string) => {
-     if(player2) return this.router.navigate([`${id}`,'match'], {relativeTo: this.routerActive});
+     if(player2) return this.router.navigate([`${id}`,'match']);
 
     try {
       await this.matchService.joinMatch(id)
-     this.router.navigate([`${id}`,'match'], {relativeTo: this.routerActive});
+     this.router.navigate([`${id}`,'match']);
     } catch({error: {error}}) {
       console.log(error);
       this.toastService.presentToast(error);
@@ -91,9 +107,5 @@ export class HomePage implements OnInit {
     }
 }
 
-  socketEvent = () => {
-    this.auth.socket.emit('hello','asdasd');
-    console.log('prova');
-}
 
 }

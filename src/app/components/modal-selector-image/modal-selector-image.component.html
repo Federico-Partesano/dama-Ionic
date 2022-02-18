@@ -1,0 +1,25 @@
+
+
+
+ <ion-modal [isOpen]="isOpen">
+  <ng-template>
+    <ion-content>
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title>Modal Content</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="handleCloseModal()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content fullscreen>
+
+    <div class="container">
+      <img class="img" (click)="handleClickImage(item)" *ngFor="let item of array"  class="img" [src]="'../../../assets/users/' + item" />
+    </div>
+  </ion-content>
+
+</ion-content>
+</ng-template>
+</ion-modal>
+

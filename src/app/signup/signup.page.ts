@@ -12,7 +12,8 @@ import { ToastService } from '../services/toast.service';
 })
 export class SignupPage implements OnInit {
   public signUpForm = new FormGroup({});
-
+  ismodalOpen: boolean = false;
+  selectedImage: string = 'horse.jpg';
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -27,11 +28,20 @@ export class SignupPage implements OnInit {
     });
   }
 
+  openModal = () => this.ismodalOpen = true;
+  emitted(event: string) {
+    this.selectedImage = event;
+    this.ismodalOpen = false;
+  }
+
+  closeModal = () => this.ismodalOpen = false;
+
   signUp = async () => {
     try {
       await this.authService.signup({
         nickname: this.signUpForm.controls.nickname.value,
         password: this.signUpForm.controls.password.value,
+        cover: this.selectedImage,
       });
       this.router.navigate(['/login'])
     } catch ({ error: { error } }) {

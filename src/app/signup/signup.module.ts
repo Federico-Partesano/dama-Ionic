@@ -7,6 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SignupPageRoutingModule } from './signup-routing.module';
 
 import { SignupPage } from './signup.page';
+import { ModalSelectorImageComponent } from '../components/modal-selector-image/modal-selector-image.component';
 
 @NgModule({
   imports: [
@@ -16,6 +17,6 @@ import { SignupPage } from './signup.page';
     SignupPageRoutingModule,
     ReactiveFormsModule
   ],
-  declarations: [SignupPage]
+  declarations: [SignupPage, ModalSelectorImageComponent]
 })
 export class SignupPageModule {}

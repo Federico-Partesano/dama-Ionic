@@ -9,7 +9,7 @@ const routes: Routes = [
   },
   {
     path: ':id/match',
-    loadChildren: () => import('./match/match.module').then( m => m.MatchPageModule)
+    loadChildren: () => import('../../match/match.module').then( m => m.MatchPageModule)
   }
 
 ];

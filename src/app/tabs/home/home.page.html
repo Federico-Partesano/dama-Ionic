@@ -11,7 +11,10 @@
 
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large"> {{ nickname }} </ion-title>
+      <ion-title>
+        Matches
+        <a class="link__title" (click)="logout()">logout</a>
+      </ion-title>
     </ion-toolbar>
   </ion-header>
   <div class="container__button">

@@ -22,7 +22,7 @@ export class AppComponent {
     })
   
     const credentials = await this.auth.getItemStorage<Credentials>('credentials');
-    this.router.navigate([ !!credentials ? '/home' : '/login' ])
+    this.router.navigate([ !!credentials ? '/tabs' : '/signup' ])
     };
   
 

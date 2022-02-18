@@ -14,6 +14,20 @@
   .input {
     background-color: transparent;
   }
+
+  .selected__img {
+    width: 30px;
+    height: 30px;
+    border-radius: 30px;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+  }
+  .container__img {
+    width: 20px;
+    height: 20px;
+    display: flex;
+  }
   
   .b {
     border-radius: 5px;

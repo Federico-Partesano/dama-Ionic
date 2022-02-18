@@ -30,10 +30,10 @@ export class LoginPage implements OnInit {
 
   logIn = async() => {
     try{
-      const accessToken = await this.authService.login({nickname:this.signUpForm.controls.nickname.value, password:this.signUpForm.controls.password.value});
-    await this.authService.setItemStorage('credentials', {nickname: this.signUpForm.controls.nickname.value, ...accessToken });
+      const {accessToken} = await this.authService.login({nickname:this.signUpForm.controls.nickname.value, password:this.signUpForm.controls.password.value});
+    await this.authService.setItemStorage('credentials', {nickname: this.signUpForm.controls.nickname.value, accessToken });
     console.log(await this.authService.getItemStorage('credentials'));
-    this.root.navigate(['/home']);
+    this.root.navigate(['/tabs','home']);
     } catch({error: {error}}) {
       console.log(error);
       this.toastService.presentToast(error);

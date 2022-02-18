@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-searchbar></ion-searchbar>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let item of users">
+      <ion-avatar slot="start">
+        <img [src]="'../../../assets/users/' + item.user2.cover" />
+      </ion-avatar>
+      <ion-label>
+        {{ item.id }}
+      </ion-label>
+    </ion-item>
+  
+  </ion-list>
+
+
+    <ion-icon (click)="openModal()" class="container__add__chat" name="add-outline"></ion-icon>
+  <app-modal-all-users
+  [isOpen]="ismodalOpen"
+  (closeModal)="closeModal()"
+  (selectedUser)="emitted($event)"
+  ></app-modal-all-users>
+</ion-content>
